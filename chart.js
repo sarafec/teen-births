@@ -1,7 +1,7 @@
 let margin = { top: 20, right: 30, bottom: 30, left: 30 };
 let constant = {
 	width: 600 - margin.left - margin.right,
-	height: 500 - margin.top - margin.bottom,
+	height: 475 - margin.top - margin.bottom,
 	x: d3.scaleBand().rangeRound([0, 600 - margin.right]).padding(0.05),
 	y: d3.scaleLinear().rangeRound([500 - margin.top - margin.bottom, 0])
 };
@@ -29,6 +29,7 @@ let data = function() {
 			staticElements.yAxis();
 			staticElements.bars();
 			staticElements.circles();
+			staticElements.legend();
 		});
 	}
 
@@ -100,11 +101,56 @@ let staticElements = function() {
 			.style('fill', 'white');
 	}
 
+	function createLegend() {
+		g.append('circle')
+			.attr('class', 'legend')
+			.attr('cx', constant.width - 190)
+			.attr('cy', 5)
+			.attr('r', 4)
+			.attr('stroke', 'black')
+			.attr('stroke-width', '0.5')
+			.style('fill', '#66b7db')
+		g.append('text')
+			.attr('x', constant.width - 185)
+			.attr('y', 9)
+			.style('font-size', '12px')
+			.text('Increase');
+
+		g.append('circle')
+			.attr('class', 'legend')
+			.attr('cx', constant.width - 120)
+			.attr('cy', 5)
+			.attr('r', 4)
+			.attr('stroke', 'black')
+			.attr('stroke-width', '0.5')
+			.style('fill', '#c96a9f')
+		g.append('text')
+			.attr('x', constant.width - 115)
+			.attr('y', 9)
+			.style('font-size', '12px')
+			.text('Decrease');
+
+		g.append('circle')
+			.attr('class', 'legend')
+			.attr('cx', constant.width - 45)
+			.attr('cy', 5)
+			.attr('r', 4)
+			.attr('stroke-width', '0.5')
+			.attr('stroke', 'black')
+			.style('fill', 'white')
+		g.append('text')
+			.attr('x', constant.width - 40)
+			.attr('y', 9)
+			.style('font-size', '12px')
+			.text('No Data');
+	}
+
 	return {
 		xAxis: createXAxis,
 		yAxis: createYAxis,
 		bars: createBars,
-		circles: createCircles
+		circles: createCircles,
+		legend: createLegend
 	}
 }();
 
