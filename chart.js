@@ -1,7 +1,7 @@
 let margin = { top: 20, right: 30, bottom: 30, left: 30 };
 let constant = {
 	width: 600 - margin.left - margin.right,
-	height: 475 - margin.top - margin.bottom,
+	height: 500 - margin.top - margin.bottom,
 	x: d3.scaleBand().rangeRound([0, 600 - margin.right]).padding(0.05),
 	y: d3.scaleLinear().rangeRound([500 - margin.top - margin.bottom, 0])
 };
@@ -36,10 +36,9 @@ let data = function() {
 	return {
 		obj: dataObject,
 		load: loadData
-	}
+	};
 }();
 
-// contains x-axis and y-axis -- elements run once and left alone
 /* STATIC ELEMENTS MODULE */
 let staticElements = function() {
 
@@ -86,6 +85,7 @@ let staticElements = function() {
 			.attr('height', function(d, i) { return constant.height - constant.y(helper.getCurrRate(i)) ;})
 			.attr('width', constant.x.bandwidth()/4);
 	}
+
 	// load circles
 	function createCircles() {
 		g.selectAll('.circle')
@@ -98,7 +98,10 @@ let staticElements = function() {
 			.attr('r', 4)
 			.attr('stroke', 'black')
 			.attr('stroke-width', '0.5')
-			.style('fill', 'white');
+			.style('fill', 'white')
+			.on('mouseover', function(d) { return tooltip.element.style('visibility', 'visible'); })
+			.on('mousemove', function(d, i) { return tooltip.element.style('top', (d3.event.pageY - 10) + 'px').style('left', (d3.event.pageX + 10) + 'px').html(tooltip.setText(i)); })
+			.on('mouseout', function(d) { return tooltip.element.style('visibility', 'hidden'); });
 	}
 
 	function createLegend() {
@@ -109,7 +112,7 @@ let staticElements = function() {
 			.attr('r', 4)
 			.attr('stroke', 'black')
 			.attr('stroke-width', '0.5')
-			.style('fill', '#66b7db')
+			.style('fill', '#66b7db');
 		g.append('text')
 			.attr('x', constant.width - 185)
 			.attr('y', 9)
@@ -123,7 +126,7 @@ let staticElements = function() {
 			.attr('r', 4)
 			.attr('stroke', 'black')
 			.attr('stroke-width', '0.5')
-			.style('fill', '#c96a9f')
+			.style('fill', '#c96a9f');
 		g.append('text')
 			.attr('x', constant.width - 115)
 			.attr('y', 9)
@@ -137,7 +140,7 @@ let staticElements = function() {
 			.attr('r', 4)
 			.attr('stroke-width', '0.5')
 			.attr('stroke', 'black')
-			.style('fill', 'white')
+			.style('fill', 'white');
 		g.append('text')
 			.attr('x', constant.width - 40)
 			.attr('y', 9)
@@ -151,12 +154,11 @@ let staticElements = function() {
 		bars: createBars,
 		circles: createCircles,
 		legend: createLegend
-	}
+	};
 }();
 
 /* DYNAMIC ELEMENTS MODULE */
 let dynamicElements = function() {
-
 	let transition = d3.transition()
 		.duration(500)
 		.ease(d3.easeLinear);
@@ -184,18 +186,36 @@ let dynamicElements = function() {
 		updateBars: updateBarHeight,
 		updateCircles: updateCircleHeight,
 		updateFill: updateCircleFill
-	}
+	};
 }();
 
 
 /* TOOLTIP MODULE */
 let tooltip = function() {
-	// create tooltip element
-	// set text for tooltip
+	let element = d3.select('.chart-area')
+			.append('div')
+			.attr('class', 'tooltip')
+			.style('position', 'absolute')
+			.style('z-index', '10')
+			.style('visibility', 'hidden');
 
-	return {
+	function setTooltipText(index) {
+		let currentRate = helper.getCurrRate(index);
+		let currentCount = helper.getCurrCount(index);
+		let diffRate = helper.getDiff(index);
+
+		if(diffRate !== 'No data') {
+			diffRate = diffRate + '%';
+		}
+
+		return '<div class="tooltip-state-area">' + data.obj[index].state.toUpperCase() +  '</div>' + '<br>' + '<div class="tooltip-content">' + '<div class="tooltip-header">Rate: </div> ' +  currentRate + '<br>' + '<div class="tooltip-header">Count: </div> ' + currentCount + '<br>' + '<div class="tooltip-header">Change: </div> ' + diffRate + '</div>';
 
 	}
+
+	return {
+		element: element,
+		setText: setTooltipText
+	};
 }();
 
 /* PLAY MODULE */
@@ -271,7 +291,7 @@ let play = function() {
 		handleClick: handleYearClick,
 		handleButton: handleYearButton
 
-	}
+	};
 }();
 
 
@@ -287,11 +307,11 @@ let helper = function() {
 	}
 	
 	function getPrevRate(index) {
-		if(helper.currentYear !== 1990) 
+		if(helper.currentYear !== 1990)
 			return +data.obj[index].data[helper.currentYear-1990-1].rate;
 	}
 
-		function getPrevCount(index) {
+	function getPrevCount(index) {
 		if(helper.currentYear !== 1990)
 			return +data.obj[index].data[helper.currentYear-1990-1].count;
 	}
@@ -304,7 +324,7 @@ let helper = function() {
 			return 'No data';
 		} else {
 			// get percentage difference
-			return (currentYearVal - prevYearVal)/currentYearVal*100;
+			return ((currentYearVal - prevYearVal)/currentYearVal*100).toFixed(1);
 		}
 	}
 
@@ -326,7 +346,7 @@ let helper = function() {
 			let maxEntry = data.obj[i].data.reduce(function(prev, curr){
 				if(prev.rate) {
 					return (prev.rate > curr.rate) ? +prev.rate : +curr.rate;
-				} 
+				}
 				return (prev > curr.rate) ? +prev : +curr.rate;
 			});
 
@@ -341,6 +361,8 @@ let helper = function() {
 		findMax: findMaxBirthRate,
 		currentYear: currentYear,
 		getCurrRate: getCurrentRate,
+		getCurrCount: getCurrentCount,
+		getDiff: getDifference,
 		getFill: getCircleFill
 	};
 }();
@@ -351,10 +373,12 @@ let yearArea = document.querySelector('.year-area');
 yearArea.addEventListener('click', play.handleClick);
 
 let buttonArea = document.querySelector('.play-btn');
-buttonArea.addEventListener('click', play.handleButton); 
+buttonArea.addEventListener('click', play.handleButton);
 
 data.load();
 
+
 // todo
-// 4 - add tooltip and tooltip text
-// think about how to represent increase/decrease in words
+// 1 - add in commas to tooltip count
+// 2 - move tooltip to the left of the pointer when close to the edge of the browser
+// 3 - find better alternative to unicode play button - looks dumb on safari mobile
