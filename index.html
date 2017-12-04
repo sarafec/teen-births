@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js"></script>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+	<!-- SIDE NAV -->
+	<div class="side-bar">
+
+		<div class="title">
+			<div class="main-title">Teen Births</div>
+			<div class="sub-title">Number of births per 1,000 females (15-19 years old)</div>
+		</div>
+	
+		<div class="year-area">
+			<div class="year-backward" data-direction="backward">‹</div>
+			<div class="year-display">1990</div>
+			<div class="year-forward" data-direction="forward">›</div>
+		</div>
+
+		<div class="play-area">
+			<button class="play-btn">▶</button>
+		</div>
+
+
+		<div class="source">
+			<div class="source-header">Source:</div> 
+			<div class="source-content">Centers for Disease Control and Prevention (CDC)</div>
+		</div>
+
+	</div>
+	
+	<!-- CHART -->
+	<div class="chart-area">
+		<svg class="birth-chart" viewBox="0 0 600 525" preserveAspectRatio="xMidYMin meet">
+		</svg>
+	</div>
+</body>
+<script src="chart.js"></script>
+</html>

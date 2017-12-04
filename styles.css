@@ -1,0 +1,100 @@
+body {
+	margin: 0;
+	font-family: sans-serif;
+}
+
+/* SIDE BAR */
+
+.side-bar {
+	position: absolute;
+	width: 250px;
+	height: 400px;
+	padding: 10px 10px 10px 10px;
+	background: linear-gradient(#eae5e7, white);
+
+}
+
+
+.title {
+	padding: 5px;
+	border-bottom: 0;
+}
+
+.main-title {
+	text-align: center;
+	font-size: 25px;
+}
+
+.sub-title {
+	margin-top: 5px;
+	text-align: center;
+	font-size: 18px;
+	font-style: italic;
+}
+
+.source {
+	margin-top: 70px;
+	padding: 15px 10px;
+	font-family: monospace;
+	font-size: 13px;
+
+}
+
+/* YEAR AREA */
+
+.year-area {
+	margin-top: 40px;
+	user-select: none;
+}
+
+.year-display {
+	font-size: 22px;
+	transform: translateY(9px);
+	margin: 0 10px;
+	user-select: none;
+	float: left;
+}
+
+.year-backward {
+	font-size: 35px;
+	cursor: pointer;
+	float: left;
+	margin-left: 30%;
+}
+
+.year-forward {
+	font-size: 35px;
+	cursor: pointer;
+	float: left;
+}
+
+/* PLAY AREA */
+.play-area {
+	margin-top: 85px;
+	margin-left: 95px;
+}
+
+.play-btn {
+	font-size: 25px;
+	background-color: transparent;
+	cursor: pointer;
+	padding: 0 15px;
+	border-radius: 0;
+	border: 2px solid black;
+	outline: none;
+}
+
+
+/* toggle off and on */
+#on {
+	color: white;
+	background-color: black;
+	border-radius: 0;
+	outline: none;
+}
+
+/* CHART */
+
+.chart-area {
+	margin: 0 0 0 275px;
+}
