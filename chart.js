@@ -201,8 +201,12 @@ let tooltip = function() {
 
 	function setTooltipText(index) {
 		let currentRate = helper.getCurrRate(index);
-		let currentCount = helper.getCurrCount(index);
+		// add commas to birth count for tooltip presentation
+		// note - is putting a function as parameter of another function a code smell?
+		let currentCount = helper.addCommas(helper.getCurrCount(index));
 		let diffRate = helper.getDiff(index);
+
+
 
 		if(diffRate !== 'No data') {
 			diffRate = diffRate + '%';
@@ -328,6 +332,22 @@ let helper = function() {
 		}
 	}
 
+	function addCommasToNum(num) {
+		let numArr = num.toString().split('');
+
+		if(numArr.length < 4) {
+			// return string representation of number
+			return num.toString();
+		} else {
+			for(let i = numArr.length - 3; i > 0; i -= 3) {
+				// add commas number array
+				numArr.splice(i,0,',');
+			}
+		}
+		// return modified string version of number
+		return numArr.join('');
+	}
+
 	function getCircleFill(index) {
 		let diff = getDifference(index);
 
@@ -363,6 +383,7 @@ let helper = function() {
 		getCurrRate: getCurrentRate,
 		getCurrCount: getCurrentCount,
 		getDiff: getDifference,
+		addCommas: addCommasToNum,
 		getFill: getCircleFill
 	};
 }();
@@ -379,6 +400,5 @@ data.load();
 
 
 // todo
-// 1 - add in commas to tooltip count
-// 2 - move tooltip to the left of the pointer when close to the edge of the browser
-// 3 - find better alternative to unicode play button - looks dumb on safari mobile
+// 1 - move tooltip to the left of the pointer when close to the edge of the browser
+// 2 - find better alternative to unicode play button - looks dumb on safari mobile
