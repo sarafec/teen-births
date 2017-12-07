@@ -207,11 +207,16 @@ let tooltip = function() {
 		let diffRate = helper.getDiff(index);
 
 
-
+		// if difference is a calculated difference rate
+		// note - diffRate is not a number because it was rounded using .toFixed()
 		if(diffRate !== 'No data') {
+
+			if(diffRate > 0) {
+				diffRate = '+' + diffRate;
+			}
+
 			diffRate = diffRate + '%';
 		}
-
 		return '<div class="tooltip-state-area">' + data.obj[index].state.toUpperCase() +  '</div>' + '<br>' + '<div class="tooltip-content">' + '<div class="tooltip-header">Rate: </div> ' +  currentRate + '<br>' + '<div class="tooltip-header">Count: </div> ' + currentCount + '<br>' + '<div class="tooltip-header">Change: </div> ' + diffRate + '</div>';
 
 	}
