@@ -246,7 +246,6 @@ let play = function() {
 				clearInterval(cycleYears);
 			}
 		}, 1200);
-
 	}
 
 	function resetYears() {
