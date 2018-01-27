@@ -7,4 +7,4 @@ This lollipop chart visualizes 26 years of teen birth data from the United State
 * Tooltips: you can mouseover the circle on top of the bar to reveal detailed data. This includes the birth rate (per 1,000 females in the state), the birth count, and the percentage increase/decrease as compared to the previous year.  
 
   
-![a gif](https://raw.githubusercontent.com/sarafec/teen-births/master/teen-births/teens.gif)
+![a gif](https://raw.githubusercontent.com/sarafec/teen-births/master/teens.gif)
