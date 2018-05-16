@@ -111,7 +111,7 @@ let staticElements = function() {
 			.attr('cy', 5)
 			.attr('r', 4)
 			.attr('stroke', 'black')
-			.attr('stroke-width', '0.5')
+			.attr('stroke-width', '0.2')
 			.style('fill', '#66b7db');
 		g.append('text')
 			.attr('x', constant.width - 185)
@@ -201,9 +201,8 @@ let tooltip = function() {
 
 	function setTooltipText(index) {
 		let currentRate = helper.getCurrRate(index);
-		// add commas to birth count for tooltip presentation
-		// note - is putting a function as parameter of another function a code smell?
-		let currentCount = helper.addCommas(helper.getCurrCount(index));
+		let currentCount = helper.getCurrCount(index);
+		let currentCountFormatted = helper.addCommas(currentCount);
 		let diffRate = helper.getDiff(index);
 
 
@@ -217,7 +216,7 @@ let tooltip = function() {
 
 			diffRate = diffRate + '%';
 		}
-		return '<div class="tooltip-state-area">' + data.obj[index].state.toUpperCase() +  '</div>' + '<br>' + '<div class="tooltip-content">' + '<div class="tooltip-header">Rate: </div> ' +  currentRate + '<br>' + '<div class="tooltip-header">Count: </div> ' + currentCount + '<br>' + '<div class="tooltip-header">Change: </div> ' + diffRate + '</div>';
+		return '<div class="tooltip-state-area">' + data.obj[index].state.toUpperCase() +  '</div>' + '<br>' + '<div class="tooltip-content">' + '<div class="tooltip-header">Rate: </div> ' +  currentRate + '<br>' + '<div class="tooltip-header">Count: </div> ' + currentCountFormatted + '<br>' + '<div class="tooltip-header">Change: </div> ' + diffRate + '</div>';
 
 	}
 

@@ -75,10 +75,11 @@ body {
 }
 
 .play-btn {
-	font-size: 25px;
+	font-size: 20px;
 	background-color: transparent;
 	cursor: pointer;
 	padding: 0 15px;
+	margin-left: -20px;
 	border-radius: 0;
 	border: 2px solid black;
 	outline: none;
@@ -96,7 +97,7 @@ body {
 /* CHART */
 
 .chart-area {
-	margin: 0 0 0 275px;
+	margin: 0 20px 0 285px;
 }
 
 /* TOOLTIP */
